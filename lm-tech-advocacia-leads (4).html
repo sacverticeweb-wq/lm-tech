@@ -1,0 +1,714 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>LM TECH — Advocacia Leads</title>
+<style>
+:root{
+  --bg:#06080c;--panel:#0d121a;--panel2:#101722;--panel3:#080c12;
+  --line:rgba(255,255,255,.085);--line2:rgba(90,157,255,.25);
+  --text:#f7f9fc;--muted:#8e99aa;--blue:#7c3aed;--blue2:#c4b5fd;
+  --green:#34d399;--amber:#f7b955;--red:#fb7185;--purple:#a78bfa;
+  --shadow:0 28px 90px rgba(0,0,0,.46);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:
+ radial-gradient(circle at 12% -8%,rgba(124,58,237,.16),transparent 28rem),
+ radial-gradient(circle at 90% 5%,rgba(196,181,253,.08),transparent 26rem),
+ linear-gradient(180deg,#06080c,#080b10 55%,#06080c);
+ color:var(--text);font:14px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+::selection{background:rgba(124,58,237,.45)}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:#080c12}
+::-webkit-scrollbar-thumb{background:#1b2635;border-radius:99px;border:2px solid #080c12}
+.shell{max-width:1540px;margin:auto;padding:26px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:22px}
+.brand{display:flex;align-items:center;gap:13px}
+.logo{width:45px;height:45px;border-radius:14px;background:linear-gradient(145deg,#a78bfa,#6d28d9);
+box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 12px 42px rgba(124,58,237,.3);display:grid;place-items:center;font-weight:900;font-size:21px}
+.brand h1{font-size:17px;margin:0;letter-spacing:-.025em}.brand span{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.btn{border:1px solid var(--line);background:rgba(255,255,255,.045);color:var(--text);padding:10px 13px;border-radius:12px;transition:.18s ease;display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap}
+.btn:hover{border-color:rgba(74,160,255,.45);background:rgba(124,58,237,.11)}
+.btn.primary{background:linear-gradient(135deg,#7c3aed,#5b21b6);border-color:transparent;box-shadow:0 10px 30px rgba(124,58,237,.22)}
+.btn.green{border-color:rgba(52,211,153,.3);background:rgba(52,211,153,.08);color:#72e8ba}
+.btn.amber{border-color:rgba(247,185,85,.28);background:rgba(247,185,85,.07);color:#ffd38d}
+.btn.red{border-color:rgba(251,113,133,.28);background:rgba(251,113,133,.07);color:#ff9aaa}
+.btn.ghost{background:transparent}
+.hero{display:grid;grid-template-columns:1.5fr .88fr;gap:16px;margin-bottom:16px}
+.glass{border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.025));backdrop-filter:blur(18px);box-shadow:var(--shadow)}
+.hero-card{border-radius:24px;padding:27px;min-height:180px;position:relative;overflow:hidden}
+.hero-card:after{content:"";position:absolute;width:340px;height:340px;border-radius:50%;background:rgba(124,58,237,.15);filter:blur(78px);right:-130px;top:-180px;pointer-events:none}
+.kicker{color:#c4b5fd;font-size:10px;font-weight:850;text-transform:uppercase;letter-spacing:.18em}
+.hero-card h2{font-size:clamp(29px,4vw,49px);line-height:1.02;letter-spacing:-.048em;margin:11px 0 11px;max-width:850px}
+.hero-card p{color:var(--muted);max-width:810px;margin:0;font-size:15px}
+.today{margin-top:20px;display:flex;gap:8px;flex-wrap:wrap}
+.today span{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);border-radius:999px;padding:7px 10px;color:#b8c2d1;font-size:11px}
+.control-card{border-radius:24px;padding:22px;display:flex;flex-direction:column;justify-content:space-between}
+.control-card strong{font-size:17px}.control-card p{color:var(--muted);margin:7px 0 15px}
+.control-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.control-grid .btn{width:100%}
+.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:16px}
+.stat{border-radius:17px;padding:17px}
+.stat small{display:block;color:var(--muted);margin-bottom:6px}.stat strong{font-size:24px;letter-spacing:-.03em}.stat .sub{font-size:10px;color:#68758a;margin-top:2px}
+.toolbar{border-radius:18px;padding:11px;display:flex;gap:9px;align-items:center;margin-bottom:11px;position:sticky;top:8px;z-index:15}
+.search{flex:1;position:relative}.search input{width:100%;background:#080c12;border:1px solid var(--line);color:var(--text);padding:12px 14px 12px 39px;border-radius:12px;outline:none}
+.search svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);opacity:.55}
+.filter{background:#080c12;border:1px solid var(--line);color:var(--text);padding:11px 12px;border-radius:12px;outline:none;max-width:205px}
+.table-wrap{border-radius:20px;overflow:hidden}
+.table-scroll{overflow:auto;max-height:calc(100vh - 244px)}
+table{width:100%;border-collapse:collapse;min-width:1110px}
+thead{position:sticky;top:0;z-index:4;background:#0b1017}
+th{text-align:left;color:#748097;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:13px 15px;border-bottom:1px solid var(--line)}
+td{padding:12px 15px;border-bottom:1px solid rgba(255,255,255,.052);vertical-align:middle}
+tbody tr{transition:.17s ease}
+tbody tr:hover{background:linear-gradient(90deg,rgba(124,58,237,.09),rgba(124,58,237,.018))}
+.company{display:flex;align-items:center;gap:10px;min-width:235px}.avatar{width:38px;height:38px;border-radius:12px;background:#111925;border:1px solid var(--line);display:grid;place-items:center;font-size:17px}.company b{display:block;font-size:13px}.company small{color:var(--muted)}
+.score{display:inline-flex;align-items:center;gap:7px;font-weight:800}.score-dot{width:8px;height:8px;border-radius:50%;box-shadow:0 0 16px currentColor}
+.grade-A{color:#50e3a4}.grade-B{color:#ffc968}.grade-C{color:#ff8498}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:999px;border:1px solid var(--line);font-size:10px;white-space:nowrap}
+.badge.status{background:rgba(255,255,255,.035);color:#c3cada}
+.badge.status.interested,.badge.status.closed{color:#5be2ad;border-color:rgba(52,211,153,.28);background:rgba(52,211,153,.08)}
+.badge.status.meeting{color:#b5f4dd;border-color:rgba(52,211,153,.28);background:rgba(52,211,153,.08)}
+.badge.status.follow{color:#c4b5fd;border-color:rgba(124,58,237,.28);background:rgba(124,58,237,.08)}
+.badge.status.lost{color:#ff8fa1;border-color:rgba(251,113,133,.28)}
+.phone,.address{color:#b7c0cf;white-space:nowrap}.address{max-width:220px;overflow:hidden;text-overflow:ellipsis}
+.open{border:1px solid rgba(74,160,255,.25);background:rgba(124,58,237,.08);color:#c4b5fd;border-radius:10px;padding:8px 10px}
+.empty{padding:52px;text-align:center;color:var(--muted)}
+.mobile-list{display:none}
+
+/* Modais */
+.overlay{position:fixed;inset:0;background:rgba(2,5,10,.76);backdrop-filter:blur(9px);z-index:100;opacity:0;pointer-events:none;transition:.22s}
+.overlay.open{opacity:1;pointer-events:auto}
+.modal{position:absolute;right:12px;top:12px;bottom:12px;width:min(750px,calc(100% - 24px));background:linear-gradient(180deg,#111722,#090d14);border:1px solid rgba(255,255,255,.11);border-radius:25px;box-shadow:0 35px 100px rgba(0,0,0,.65);overflow:auto;transform:translateX(28px) scale(.986);transition:.24s ease}
+.overlay.open .modal{transform:none}
+.modal.wide{width:min(980px,calc(100% - 24px))}
+.modal.center{left:50%;right:auto;top:50%;bottom:auto;transform:translate(-50%,-47%) scale(.98);max-height:calc(100% - 28px)}
+.overlay.open .modal.center{transform:translate(-50%,-50%) scale(1)}
+.modal-head{position:sticky;top:0;z-index:5;background:rgba(13,18,27,.92);backdrop-filter:blur(18px);padding:19px 21px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+.modal-head h3{font-size:23px;letter-spacing:-.035em;margin:3px 0 2px}.modal-head p{color:var(--muted);margin:0}
+.close{width:38px;height:38px;border-radius:12px;background:#080d14;border:1px solid var(--line);color:#fff;font-size:20px;flex:none}
+.modal-body{padding:21px}
+.detail-top{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:14px}
+.detail-card{padding:13px;border:1px solid var(--line);background:rgba(255,255,255,.025);border-radius:15px}.detail-card small{display:block;color:var(--muted);font-size:9px;text-transform:uppercase;letter-spacing:.09em;margin-bottom:5px}.detail-card strong{font-size:14px}
+.quick-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:16px}
+.quick-action{padding:14px;border:1px solid var(--line);border-radius:15px;background:rgba(255,255,255,.025);color:#fff;text-align:left;transition:.18s}
+.quick-action:hover{border-color:rgba(74,160,255,.38);background:rgba(124,58,237,.07)}
+.quick-action b{display:block;font-size:12px;margin-bottom:4px}.quick-action span{color:var(--muted);font-size:10px}
+.quick-action.archive:hover{border-color:rgba(251,113,133,.32);background:rgba(251,113,133,.05)}
+.quick-action.meet:hover{border-color:rgba(52,211,153,.32);background:rgba(52,211,153,.05)}
+.section{padding:17px 0;border-top:1px solid var(--line)}.section:first-of-type{border-top:0}.section h4{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:#8290a5;margin:0 0 12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:11px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+.field label{display:block;color:#8e9aae;font-size:10px;margin:0 0 6px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);background:#070b11;color:var(--text);border-radius:12px;padding:11px 12px;outline:none}.field textarea{min-height:98px;resize:vertical}.field input:focus,.field select:focus,.field textarea:focus{border-color:rgba(74,160,255,.45);box-shadow:0 0 0 3px rgba(124,58,237,.07)}
+.pitch,.dependency{border:1px solid rgba(124,58,237,.2);background:linear-gradient(135deg,rgba(124,58,237,.1),rgba(124,58,237,.035));border-radius:16px;padding:15px;color:#c9d6e8}
+.pitch strong,.dependency strong{display:block;color:#c4b5fd;font-size:10px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:6px}
+.dependency{border-color:rgba(247,185,85,.2);background:linear-gradient(135deg,rgba(247,185,85,.08),rgba(247,185,85,.025));margin-bottom:10px}
+.dependency strong{color:#ffd28b}
+.script-box{position:relative}.script-box textarea{min-height:160px;padding-right:48px}.copy-mini{position:absolute;right:8px;top:8px;border:1px solid var(--line);background:#101722;color:#ddd6fe;border-radius:9px;padding:7px 9px;font-size:10px}
+.modal-actions{position:sticky;bottom:0;padding:13px 21px;background:rgba(11,15,22,.94);backdrop-filter:blur(16px);border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:10px}.right-actions{display:flex;gap:8px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:#121925;border:1px solid var(--line);padding:11px 14px;border-radius:12px;opacity:0;pointer-events:none;transition:.2s;z-index:200;box-shadow:var(--shadow)}.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* Importador */
+.import-drop{border:1px dashed rgba(74,160,255,.32);background:rgba(124,58,237,.045);border-radius:18px;padding:18px;margin-bottom:13px}
+.import-drop textarea{width:100%;min-height:280px;background:#060a10;color:#dbe6f7;border:1px solid var(--line);border-radius:13px;padding:14px;resize:vertical;outline:none;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.55}
+.import-tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.import-result{display:none;margin-top:12px;border:1px solid var(--line);background:rgba(255,255,255,.025);border-radius:14px;padding:13px;color:#bdc8d8}
+.import-result.show{display:block}
+
+/* Scripts */
+.script-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.script-card{border:1px solid var(--line);background:rgba(255,255,255,.025);border-radius:18px;padding:15px}
+.script-card-head{display:flex;justify-content:space-between;gap:10px;align-items:start;margin-bottom:11px}.script-card h4{margin:0;font-size:14px}.dep-pill{font-size:9px;color:#ffd18a;border:1px solid rgba(247,185,85,.2);background:rgba(247,185,85,.06);padding:5px 8px;border-radius:999px}
+.script-card textarea{width:100%;min-height:170px;background:#070b11;color:#dce6f5;border:1px solid var(--line);border-radius:12px;padding:11px;resize:vertical;outline:none;font-size:12px;line-height:1.55}
+.hint{color:var(--muted);font-size:11px;margin-top:8px}
+@media(max-width:1050px){
+  .shell{padding:16px}.hero{grid-template-columns:1fr}.stats{grid-template-columns:repeat(3,1fr)}.toolbar{position:static;flex-wrap:wrap}.search{flex-basis:100%}.filter{flex:1;max-width:none}.table-wrap{display:none}.mobile-list{display:grid;gap:9px}
+  .lead-card{border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:17px;padding:15px}.lead-card-top{display:flex;justify-content:space-between;gap:12px}.lead-card h3{margin:0 0 3px;font-size:15px}.lead-card p{margin:0;color:var(--muted);font-size:12px}.lead-card-meta{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.lead-card-meta span{font-size:10px;border:1px solid var(--line);padding:5px 8px;border-radius:999px}
+}
+@media(max-width:700px){
+  .topbar{align-items:flex-start;flex-direction:column}.actions{width:100%;overflow:auto;flex-wrap:nowrap;justify-content:flex-start;padding-bottom:3px}.hero-card{padding:21px}.control-card{padding:18px}.control-grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr);gap:8px}.stat{padding:14px}.stat strong{font-size:21px}
+  .detail-top{grid-template-columns:1fr 1fr}.quick-actions{grid-template-columns:1fr}.grid2,.grid3,.script-grid{grid-template-columns:1fr}.modal{inset:7px;width:auto}.modal.center{left:7px;right:7px;top:7px;bottom:7px;width:auto;max-height:none;transform:translateY(20px) scale(.99)}.overlay.open .modal.center{transform:none}.modal-body{padding:15px}.modal-head{padding:15px}.modal-actions{padding:11px 15px;flex-direction:column}.right-actions{width:100%}.right-actions .btn{flex:1}
+}
+
+/* LM TECH visual system */
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.45),transparent 70%);z-index:-1}
+.shell{max-width:1580px}
+.logo{position:relative;overflow:hidden;background:linear-gradient(145deg,#0b0b12,#25163f 58%,#7c3aed);border:1px solid rgba(216,180,254,.35);box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 16px 48px rgba(124,58,237,.28)}
+.logo:after{content:"";position:absolute;inset:-45%;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.18),transparent 65%);transform:rotate(18deg);animation:lmShine 7s ease-in-out infinite}
+.logo span{position:relative;z-index:1;font-size:13px;letter-spacing:-.05em}
+@keyframes lmShine{0%,72%{transform:translateX(-80%) rotate(18deg)}88%,100%{transform:translateX(80%) rotate(18deg)}}
+.brand h1{font-size:18px;letter-spacing:.08em;font-weight:900}.brand span{letter-spacing:.02em}
+.hero-card{background:radial-gradient(circle at 85% 20%,rgba(124,58,237,.18),transparent 28rem),linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.018))}
+.hero-card h2{max-width:960px}.hero-accent{background:linear-gradient(90deg,#fff,#c4b5fd 58%,#8b5cf6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.kicker{color:#c4b5fd}.btn.primary{background:linear-gradient(135deg,#8b5cf6,#6d28d9);box-shadow:0 12px 34px rgba(124,58,237,.24)}
+.btn:disabled{opacity:.38;cursor:not-allowed;filter:saturate(.25)}
+.glass{border-color:rgba(255,255,255,.09);background:linear-gradient(180deg,rgba(255,255,255,.052),rgba(255,255,255,.018))}
+.stat{transition:transform .18s ease,border-color .18s ease}.stat:hover{transform:translateY(-2px);border-color:rgba(196,181,253,.22)}
+.toolbar{box-shadow:0 24px 70px rgba(0,0,0,.34)}
+.open{font-weight:750}.open:hover{transform:translateY(-1px)}
+.company small{display:block;margin-top:2px;max-width:360px;white-space:normal;line-height:1.25}
+.modal{border-color:rgba(196,181,253,.16)}
+.modal-head{background:rgba(12,10,18,.92)}
+.pitch{border-color:rgba(124,58,237,.25);background:linear-gradient(135deg,rgba(124,58,237,.12),rgba(124,58,237,.025))}
+.pitch strong{color:#c4b5fd}
+@media(max-width:700px){.brand h1{font-size:16px}.logo{width:42px;height:42px}.actions .btn{padding:9px 11px}}
+
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="topbar">
+    <div class="brand"><div class="logo"><span>LM</span></div><div><h1>LM TECH</h1><span>Legal Lead Intelligence • CRM de advocacias</span></div></div>
+    <div class="actions">
+      <button class="btn primary" id="importBatch">⇩ Importar remessa</button>
+      <button class="btn" id="scriptsBtn">☎ Script jurídico</button>
+      <button class="btn" id="exportCsv">Exportar CSV</button>
+      <button class="btn" id="exportJson">Backup JSON</button>
+      <button class="btn" id="newLead">＋ Novo lead</button>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="hero-card glass">
+      <div class="kicker">LM TECH • LEGAL SALES INTELLIGENCE</div>
+      <h2>Pipeline comercial. <span class="hero-accent">Venda com contexto.</span></h2>
+      <p id="welcomeSummary">Base exclusiva de advocacias e advogados, pronta para prospecção.</p>
+      <div class="today">
+        <span>● <b id="todayFollow">0</b>&nbsp; retornos pendentes</span>
+        <span>◆ <b id="todayMeet">0</b>&nbsp; reuniões marcadas</span>
+        <span>✓ <b id="todayActive">0</b>&nbsp; leads ativos</span>
+      </div>
+    </div>
+    <div class="control-card glass">
+      <div>
+        <strong>Base comercial inteligente</strong>
+        <p>Centralize leads, diagnóstico digital, follow-ups e scripts. Toda a operação continua local no navegador, com backup em JSON.</p>
+      </div>
+      <div class="control-grid">
+        <button class="btn" id="importBtn">Importar backup</button>
+        <button class="btn" id="resetBtn">Restaurar base</button>
+        <input type="file" id="importFile" accept=".json,application/json" hidden>
+      </div>
+    </div>
+  </section>
+
+  <div class="stats">
+    <div class="stat glass"><small>Leads visíveis</small><strong id="statTotal">0</strong><div class="sub">após filtros</div></div>
+    <div class="stat glass"><small>Prioridade A</small><strong id="statA">0</strong><div class="sub">melhores oportunidades</div></div>
+    <div class="stat glass"><small>Interessados</small><strong id="statInterested">0</strong><div class="sub">em negociação</div></div>
+    <div class="stat glass"><small>Reuniões</small><strong id="statMeetings">0</strong><div class="sub">marcadas</div></div>
+    <div class="stat glass"><small>Follow-ups</small><strong id="statFollow">0</strong><div class="sub">retornos</div></div>
+    <div class="stat glass"><small>Sites a atacar</small><strong id="statSiteOpp">0</strong><div class="sub">sem site / precisa melhorar</div></div>
+  </div>
+
+  <div class="toolbar glass">
+    <div class="search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
+      <input id="search" placeholder="Buscar empresa, bairro, telefone, anotação...">
+    </div>
+    <select class="filter" id="categoryFilter"><option value="">Advocacias e advogados</option></select>
+    <select class="filter" id="gradeFilter"><option value="">Todas prioridades</option><option value="A">A — Alta</option><option value="B">B — Média</option><option value="C">C — Baixa</option></select>
+    <select class="filter" id="statusFilter"><option value="">Todos os status</option></select>
+    <select class="filter" id="archiveFilter"><option value="active">Leads ativos</option><option value="archived">Arquivados</option><option value="all">Ativos + arquivados</option></select>
+    <select class="filter" id="sortFilter"><option value="score-desc">Maior score</option><option value="name-asc">Nome A–Z</option><option value="status">Status</option><option value="next">Próxima ação</option></select>
+  </div>
+
+  <div class="table-wrap glass">
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Empresa</th><th>Score</th><th>Prioridade</th><th>Telefone</th><th>Localização</th><th>Status</th><th>Próxima ação</th><th></th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="mobile-list" id="mobileList"></div>
+</div>
+
+<!-- Lead -->
+<div class="overlay" id="leadOverlay" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-head">
+      <div><div class="kicker" id="modalCategory">Lead</div><h3 id="modalTitle">Empresa</h3><p id="modalSubtitle"></p></div>
+      <button class="close" data-close="leadOverlay">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="detail-top">
+        <div class="detail-card"><small>Score</small><strong id="detailScore">—</strong></div>
+        <div class="detail-card"><small>Google</small><strong id="detailGoogle">—</strong></div>
+        <div class="detail-card"><small>Status</small><strong id="detailStatus">Novo</strong></div>
+        <div class="detail-card"><small>Próxima ação</small><strong id="detailNext">—</strong></div>
+      </div>
+
+      <div class="quick-actions">
+        <button class="quick-action archive" id="quickArchive"><b>✕ Encerrar contato</b><span>Arquiva e tira da lista ativa</span></button>
+        <button class="quick-action meet" id="quickMeeting"><b>◆ Reunião marcada</b><span>Marca o lead e abre data/hora</span></button>
+        <button class="quick-action" id="quick3days"><b>↻ Chamar em 3 dias</b><span>Cria follow-up automaticamente</span></button>
+      </div>
+
+      <div class="section">
+        <h4>Informações principais</h4>
+        <div class="grid2">
+          <div class="field"><label>Empresa</label><input id="fName"></div>
+          <div class="field"><label>Segmento</label><input id="fCategory" value="ADVOCACIA" readonly></div>
+          <div class="field"><label>Telefone</label><input id="fPhone"></div>
+          <div class="field"><label>Endereço / bairro</label><input id="fAddress"></div>
+          <div class="field"><label>Score</label><input id="fScore" type="number" min="0" max="100"></div>
+          <div class="field"><label>Prioridade</label><select id="fGrade"><option>A</option><option>B</option><option>C</option><option value="">Sem classificação</option></select></div>
+          <div class="field"><label>Avaliação Google</label><input id="fRating" placeholder="Ex.: 4,8"></div>
+          <div class="field"><label>Nº de avaliações</label><input id="fReviews" placeholder="Ex.: 1.250"></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h4>Presença digital</h4>
+        <div class="grid2">
+          <div class="field"><label>Situação do site</label><select id="fSiteStatus"><option>Não analisado</option><option>Sem site</option><option>Possui site</option><option>Site precisa melhorar</option><option>Site bom</option></select></div>
+          <div class="field"><label>Website</label><input id="fWebsite" placeholder="https://..."></div>
+          <div class="field"><label>Instagram</label><input id="fInstagram" placeholder="@empresa"></div>
+          <div class="field"><label>E-mail</label><input id="fEmail" placeholder="contato@..."></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h4>Comercial</h4>
+        <div class="grid2">
+          <div class="field"><label>Status</label><select id="fStatus"></select></div>
+          <div class="field"><label>Responsável / contato</label><input id="fResponsible" placeholder="Nome do dono ou responsável"></div>
+          <div class="field"><label>Último contato</label><input id="fLastContact" type="date"></div>
+          <div class="field"><label>Próximo contato</label><input id="fNextDate" type="date"></div>
+          <div class="field"><label>Reunião marcada</label><input id="fMeetingDate" type="datetime-local"></div>
+          <div class="field"><label>Próxima ação</label><input id="fNextAction" placeholder="Ex.: ligar novamente, enviar proposta..."></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h4>Pontos-chave do segmento jurídico</h4>
+        <div class="dependency" id="dependencyBox"></div>
+        <h4 style="margin-top:14px">Script de ligação</h4>
+        <div class="script-box">
+          <textarea id="leadScript"></textarea>
+          <button class="copy-mini" id="copyScript">Copiar</button>
+        </div>
+        <div class="hint">O script usa [EMPRESA] automaticamente. Você pode editar o script jurídico pelo botão “Script jurídico”.</div>
+      </div>
+
+      <div class="section">
+        <h4>Argumento de abordagem</h4>
+        <div class="pitch" id="pitchBox"></div>
+        <div class="field" style="margin-top:11px"><label>Argumento personalizado</label><textarea id="fArgument" placeholder="Ajuste aqui o melhor argumento para este lead..."></textarea></div>
+      </div>
+
+      <div class="section">
+        <h4>Anotações</h4>
+        <div class="field"><textarea id="fNotes" placeholder="Histórico da conversa, objeções, valores falados, próximos passos..."></textarea></div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn red" id="deleteLead">Excluir permanentemente</button>
+      <div class="right-actions"><button class="btn" id="openWebsite">↗ Site</button><button class="btn green" id="openWhatsapp">WhatsApp</button><button class="btn" id="copyPhone">Copiar telefone</button><button class="btn primary" id="saveLead">Salvar alterações</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- Importador de remessa -->
+<div class="overlay" id="importOverlay">
+  <div class="modal wide center">
+    <div class="modal-head">
+      <div><div class="kicker">Importação em lote</div><h3>Adicionar nova remessa de leads</h3><p>Cole o mesmo padrão de texto/Markdown que você já usa.</p></div>
+      <button class="close" data-close="importOverlay">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="import-drop">
+        <textarea id="batchText" placeholder="### 🍔 HAMBURGUERIAS
+
+**1. Nome da empresa**
+Telefone: +55 ...
+Endereço: ...
+Google: 4,8 ★ — 120 avaliações
+Score: **85 — A**
+Argumento: ..."></textarea>
+        <div class="import-tools">
+          <button class="btn" id="batchFileBtn">Abrir .txt / .md</button>
+          <button class="btn primary" id="previewBatch">Analisar remessa</button>
+          <input id="batchFile" type="file" accept=".txt,.md,text/plain,text/markdown" hidden>
+        </div>
+        <div class="import-result" id="importResult"></div>
+      </div>
+      <div class="hint">Duplicados são detectados principalmente pelo nome e telefone. A importação não apaga os leads atuais.</div>
+    </div>
+    <div class="modal-actions">
+      <span style="color:var(--muted);font-size:11px">A nova remessa será somada à base atual.</span>
+      <div class="right-actions"><button class="btn" data-close="importOverlay">Cancelar</button><button class="btn primary" id="confirmBatch" disabled>Importar leads</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- Scripts -->
+<div class="overlay" id="scriptsOverlay">
+  <div class="modal wide center">
+    <div class="modal-head">
+      <div><div class="kicker">Central de abordagem</div><h3>Script para advocacia</h3><p>Edite uma vez e o script aparece automaticamente em todos os leads jurídicos.</p></div>
+      <button class="close" data-close="scriptsOverlay">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="script-grid" id="scriptGrid"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn" id="resetScripts">Restaurar scripts padrão</button>
+      <div class="right-actions"><button class="btn" data-close="scriptsOverlay">Cancelar</button><button class="btn primary" id="saveScripts">Salvar scripts</button></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const BASE_DATA = [{"category":"ADVOCACIA","index":1,"name":"Maria Antonucci Advocacia","phone":"+55 11 99609-6703","address":"Rua Ribeiro do Vale, 1477 — Brooklin Novo","rating":"5,0","reviews":"53","score":96,"grade":"A","priority":"Alta prioridade","argument":"Reputação 5,0 e especialização clara em inventário, sucessões e imobiliário. O site atual concentra quase tudo em uma landing page; oportunidade de elevar percepção premium, arquitetura de conteúdo e experiência institucional.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"https://mariaantonucci.com/","instagram":"","email":"mariaantonucciadvogada@gmail.com","responsible":"Dra. Maria Antonucci","lastContact":"","nextDate":"","nextAction":"","notes":"OAB/SP 382.829. Site informa inventário extrajudicial/judicial, regularização de imóveis, usucapião, testamentos, doações e due diligence.","siteStatus":"Site precisa melhorar","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-121"},{"category":"ADVOCACIA","index":2,"name":"Dra. Rosana Simões - Advocacia","phone":"+55 11 99592-9910","address":"R. Barão do Triunfo, 427 — Brooklin","rating":"5,0","reviews":"199","score":92,"grade":"A","priority":"Alta prioridade","argument":"Volume forte de avaliações e presença local. Há espaço para transformar o site em uma experiência mais premium, com hierarquia de serviços, prova social e navegação mais refinada.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"https://rosanasimoesadv.com.br/","instagram":"","email":"","responsible":"Dra. Rosana Simões","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Site precisa melhorar","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-122"},{"category":"ADVOCACIA","index":3,"name":"Poli Advogados & Associados","phone":"+55 11 98206-4104","address":"R. João da Cruz Melão, 241 — Morumbi","rating":"5,0","reviews":"51","score":72,"grade":"B","priority":"Média prioridade","argument":"Escritório com posicionamento consolidado em propriedade intelectual. Lead menos simples de converter porque já possui site estruturado; abordagem deve ser de refinamento, performance e experiência digital.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"https://www.poliadv.com.br/pt/","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Site bom","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-123"},{"category":"ADVOCACIA","index":4,"name":"Tedesco e Donato Advocacia","phone":"+55 54 99126-3516","address":"Rua Ambrizette, 70 — Morumbi","rating":"5,0","reviews":"40","score":84,"grade":"A","priority":"Alta prioridade","argument":"Boa reputação local. Validar presença digital e, se estiver dispersa ou dependente de diretórios/redes, oferecer estrutura institucional própria.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-124"},{"category":"ADVOCACIA","index":5,"name":"Dario Carneiro Advocacia","phone":"+55 11 99413-3461","address":"Alameda Santos, 771, sala 61 — Jardim Paulista","rating":"5,0","reviews":"143","score":87,"grade":"A","priority":"Alta prioridade","argument":"Especialização explícita em Direito Imobiliário e muitas avaliações. Forte candidato para uma apresentação digital premium focada em autoridade e clareza de serviços.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-125"},{"category":"ADVOCACIA","index":6,"name":"Souza Eduardo Advogados","phone":"+55 11 99146-9080","address":"Rua George Ohm, 206, Torre B, cj. 101 — Brooklin","rating":"4,9","reviews":"169","score":81,"grade":"A","priority":"Alta prioridade","argument":"Reputação local forte e endereço corporativo no Brooklin. Validar se o site acompanha a percepção de marca e se há páginas por área/CTA bem estruturadas.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-126"},{"category":"ADVOCACIA","index":7,"name":"Luciana Rosa Advogados","phone":"não informado","address":"Rua Dr. Guilherme Bannitz, 126 — Itaim Bibi","rating":"5,0","reviews":"63","score":84,"grade":"A","priority":"Alta prioridade","argument":"Posicionamento muito alinhado a inventário, herança, família e sucessões. Ótimo nicho para arquitetura de conteúdo, autoridade e conversão ética.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-127"},{"category":"ADVOCACIA","index":8,"name":"Matheus William Advocacia","phone":"+55 11 95866-3742","address":"R. Algemesi, 45 — Morumbi","rating":"5,0","reviews":"356","score":91,"grade":"A","priority":"Alta prioridade","argument":"356 avaliações e nota máxima tornam a reputação um ativo forte. Se a presença institucional não estiver no mesmo nível, o contraste vira um gancho comercial muito bom.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-128"},{"category":"ADVOCACIA","index":9,"name":"Rafael Bispo Advocacia","phone":"+55 11 98899-4591","address":"Av. Dr. Guilherme Dumont Vilares, 1050 — Morumbi","rating":"5,0","reviews":"95","score":87,"grade":"A","priority":"Alta prioridade","argument":"Boa reputação local e contato direto. Validar site e propor presença institucional mais clara, profissional e orientada às áreas atendidas.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-129"},{"category":"ADVOCACIA","index":10,"name":"Adão de Souza Araújo — Advocacia Imobiliária","phone":"+55 11 3794-0308","address":"Av. Nove de Julho, 3229, cj. 403 — Jardim Paulista","rating":"4,9","reviews":"77","score":87,"grade":"A","priority":"Alta prioridade","argument":"Especialização imobiliária e usucapião com boa prova social. Excelente perfil para site de autoridade local com páginas informativas por serviço.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-130"},{"category":"ADVOCACIA","index":11,"name":"Felipe Ramos Advogados","phone":"+55 11 5039-2222","address":"Rua Arandu, 57 — Brooklin","rating":"4,9","reviews":"111","score":80,"grade":"A","priority":"Alta prioridade","argument":"Boa reputação no Brooklin. Validar site e presença local; abordagem com foco em percepção premium, organização de áreas e velocidade/mobile.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-131"},{"category":"ADVOCACIA","index":12,"name":"Eugênia Crepaldi Advocacia","phone":"+55 11 98108-3230","address":"R. Dr. Clóvis de Oliveira — Morumbi","rating":"5,0","reviews":"35","score":84,"grade":"A","priority":"Alta prioridade","argument":"Nota máxima e operação local. Potencial para apresentar um projeto institucional mais premium caso a presença atual seja simples ou concentrada em redes sociais.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-132"},{"category":"ADVOCACIA","index":13,"name":"Costenaro Advocacia","phone":"+55 11 95420-7233","address":"Rua dos Três Irmãos, 62 — Morumbi","rating":"5,0","reviews":"117","score":89,"grade":"A","priority":"Alta prioridade","argument":"117 avaliações com nota máxima. Forte gancho: transformar reputação já existente em presença institucional que transmita o mesmo nível de confiança.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-133"},{"category":"ADVOCACIA","index":14,"name":"Marcia Nascimento Advocacia","phone":"+55 11 95456-6034","address":"R. Flórida, 1758, 9º andar — Cidade Monções/Brooklin","rating":"5,0","reviews":"39","score":88,"grade":"A","priority":"Alta prioridade","argument":"Especialista em divórcio, inventário, família e partilha. Segmento excelente para páginas específicas, FAQ informativo e contato bem organizado.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-134"},{"category":"ADVOCACIA","index":15,"name":"KUNTZ","phone":"+55 11 5534-4444","address":"R. Pitu, 72 — Cidade Monções/Brooklin","rating":"4,8","reviews":"26","score":76,"grade":"B","priority":"Média prioridade","argument":"Escritório no eixo Berrini/Brooklin. Validar presença e maturidade digital antes de abordar; potencial de reposicionamento institucional.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-135"},{"category":"ADVOCACIA","index":16,"name":"Souza Lima Advocacia - Direito de Família","phone":"+55 11 2738-9193","address":"Alameda Santos, 2159 — Jardim Paulista","rating":"5,0","reviews":"153","score":82,"grade":"A","priority":"Alta prioridade","argument":"153 avaliações e nicho de família. Excelente perfil para destacar confiança, conteúdo informativo, jornada de contato e experiência mobile.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-136"},{"category":"ADVOCACIA","index":17,"name":"Advogado Flávio Brull","phone":"+55 11 91328-6281","address":"R. Porto Martins, 277 — Brooklin","rating":"4,9","reviews":"24","score":84,"grade":"A","priority":"Alta prioridade","argument":"Boa reputação e operação local. Pode ser um lead acessível para melhoria de apresentação institucional e captação orgânica local.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-137"},{"category":"ADVOCACIA","index":18,"name":"Costa Law - Advocacia e Consultoria Jurídica","phone":"+55 11 94198-8484","address":"Av. das Nações Unidas, 12495 — Brooklin Novo","rating":"5,0","reviews":"201","score":80,"grade":"A","priority":"Alta prioridade","argument":"201 avaliações e endereço corporativo forte. Validar o nível do site antes do contato; se estiver abaixo da reputação, usar isso como gancho.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-138"},{"category":"ADVOCACIA","index":19,"name":"Advogados do Morumbi","phone":"+55 11 3501-8633","address":"Av. Dr. Guilherme Dumont Vilares, 566 — Jardim Londrina/Morumbi","rating":"5,0","reviews":"1","score":88,"grade":"A","priority":"Alta prioridade","argument":"Nome extremamente local e memorável. Se não houver site forte, há excelente oportunidade de SEO local e identidade institucional.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-139"},{"category":"ADVOCACIA","index":20,"name":"Almeida Markus Advocacia","phone":"+55 11 94292-8828","address":"R. Barão do Triunfo, 612, sala 501 — Brooklin","rating":"5,0","reviews":"2","score":86,"grade":"A","priority":"Alta prioridade","argument":"Pequeno volume de avaliações e endereço estratégico. Perfil potencialmente acessível para proposta de site institucional completo e SEO local.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-140"},{"category":"ADVOCACIA","index":21,"name":"Almeida Advocacia Empresarial","phone":"+55 11 93062-1433","address":"R. Prof. Santiago Dantas, 83 — Morumbi","rating":"5,0","reviews":"30","score":86,"grade":"A","priority":"Alta prioridade","argument":"Atuação empresarial e reputação máxima. Site premium pode elevar percepção corporativa e organizar competências, equipe e conteúdo.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-141"},{"category":"ADVOCACIA","index":22,"name":"Elias & Cury Advogados Associados","phone":"+55 11 3771-3100","address":"Rua Edward Joseph, 122, cj. 34 — Morumbi","rating":"5,0","reviews":"147","score":79,"grade":"B","priority":"Média prioridade","argument":"147 avaliações e presença consolidada. Validar site: se já for robusto, trabalhar melhoria de UX/performance; se não, gancho forte de reputação versus presença digital.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-142"},{"category":"ADVOCACIA","index":23,"name":"ABR - Advogados Associados","phone":"+55 11 94242-4113","address":"Av. Eng. Luís Carlos Berrini, 1748, cj. 1710 — Cidade Monções","rating":"5,0","reviews":"153","score":78,"grade":"B","priority":"Média prioridade","argument":"Reputação forte e endereço corporativo. Lead interessante, mas potencialmente mais estruturado; abordagem deve ser consultiva e muito personalizada.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-143"},{"category":"ADVOCACIA","index":24,"name":"TBV Advocacia","phone":"+55 11 91643-3346","address":"Av. das Nações Unidas, 12495 — Brooklin","rating":"5,0","reviews":"20","score":86,"grade":"A","priority":"Alta prioridade","argument":"Boa nota e escritório no Brooklin. Oportunidade para um site enxuto, moderno e corporativo se a presença atual estiver dispersa.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-144"},{"category":"ADVOCACIA","index":25,"name":"Andrea Galvão Advocacia","phone":"+55 11 2729-3133","address":"Av. Eng. Luís Carlos Berrini, 105, cj. 907 — Cidade Monções","rating":"5,0","reviews":"1","score":88,"grade":"A","priority":"Alta prioridade","argument":"Atuação em marcas, imobiliário, família e sucessões. Diversidade de áreas exige arquitetura clara; ótimo argumento para reorganização institucional.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-145"},{"category":"ADVOCACIA","index":26,"name":"FCO Advocacia Imobiliária","phone":"+55 11 94919-3382","address":"R. do Rocio, 423, sala 1101 — Vila Olímpia","rating":"5,0","reviews":"35","score":85,"grade":"A","priority":"Alta prioridade","argument":"Nicho imobiliário claro e ótima avaliação. Potencial para páginas de serviço, autoridade técnica e contato orientado por demanda.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-146"},{"category":"ADVOCACIA","index":27,"name":"Dra. Tamires Soares — Família e Sucessões","phone":"+55 11 96850-8524","address":"Av. Brig. Faria Lima, 1811, cj. 918 — Jardim Paulistano","rating":"5,0","reviews":"28","score":87,"grade":"A","priority":"Alta prioridade","argument":"Família e sucessões em região premium. Bom candidato para projeto boutique com linguagem sofisticada e experiência digital alinhada ao posicionamento.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-147"},{"category":"ADVOCACIA","index":28,"name":"Jorge Advogados Associados","phone":"+55 11 3721-6357","address":"R. Castilho, 392, cj. 142 — Brooklin","rating":"5,0","reviews":"26","score":84,"grade":"A","priority":"Alta prioridade","argument":"Boa reputação e localização. Validar site e diferenciação; pode haver oportunidade de posicionamento mais atual e clareza comercial.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-148"},{"category":"ADVOCACIA","index":29,"name":"Giovanna Modena Advocacia","phone":"+55 11 99027-7226","address":"Av. Eng. Luís Carlos Berrini, 1681, 11º andar — Cidade Monções","rating":"4,9","reviews":"336","score":79,"grade":"B","priority":"Média prioridade","argument":"336 avaliações indicam forte presença. Antes de abordar, validar o site; se já for robusto, focar performance, design e conversão.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-149"},{"category":"ADVOCACIA","index":30,"name":"Yunes Fraiha Advogados","phone":"+55 11 5095-2525","address":"R. Barão do Triunfo, 612, 11º andar — Brooklin Paulista","rating":"","reviews":"","score":70,"grade":"B","priority":"Média prioridade","argument":"Escritório tradicional e site existente. Menos indicado para abordagem genérica; só vale contato com diagnóstico visual/técnico específico.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"https://www.yunesfraiha.com.br/","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Possui site","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-150"},{"category":"ADVOCACIA","index":31,"name":"Davi Leite Advogado","phone":"+55 11 91786-7199","address":"Rua Barão do Triunfo, 375, sala 117 — Brooklin","rating":"","reviews":"","score":79,"grade":"B","priority":"Média prioridade","argument":"Site já organiza serviços e contato, mas há oportunidade de refinamento de marca, hierarquia visual e experiência para segmentos de alto volume.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"https://www.davileite.com.br/","instagram":"@davileiteadv","email":"atendimento@davileite.com.br","responsible":"Davi Leite","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Possui site","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-151"},{"category":"ADVOCACIA","index":32,"name":"YF Advogados","phone":"+55 11 5543-4416","address":"Avenida Portugal, 1629, cj. 62 — Brooklin","rating":"","reviews":"","score":90,"grade":"A","priority":"Alta prioridade","argument":"O site é funcional e bastante genérico na apresentação. Bom gancho para reposicionamento mais proprietário, prova de especialização e melhor diferenciação visual.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"https://yfadvogados.com.br/","instagram":"@yf_advogados","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Site precisa melhorar","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-152"},{"category":"ADVOCACIA","index":33,"name":"Advocacia Lunardelli","phone":"+55 11 4095-4700","address":"Rua Samuel Morse, 134, cj. 172 — Brooklin Novo","rating":"","reviews":"","score":66,"grade":"B","priority":"Média prioridade","argument":"Escritório tributário especializado com site estruturado. Lead mais difícil; só abordar com proposta específica de performance, conteúdo ou redesign pontual.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"https://advocacialunardelli.com.br/","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Site bom","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-153"},{"category":"ADVOCACIA","index":34,"name":"BLS Advogados","phone":"+55 11 4085-6200","address":"Rua Surubim, 577, 22º andar — Brooklin","rating":"","reviews":"","score":64,"grade":"B","priority":"Média prioridade","argument":"Estrutura corporativa e presença digital madura. Prioridade menor para venda de site completo.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"https://blslaw.com.br/","instagram":"","email":"contato@blslaw.com.br","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Site bom","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-154"},{"category":"ADVOCACIA","index":35,"name":"De Luca Advogados","phone":"+55 11 3106-9117","address":"Rua Álvaro Rodrigues, 182, cj. 121 — Brooklin","rating":"","reviews":"","score":72,"grade":"B","priority":"Média prioridade","argument":"Escritório com 40 anos e site existente. Oportunidade mais adequada para redesign/UX do que criação do zero.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"https://delucaadvogados.com.br/","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Possui site","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-155"},{"category":"ADVOCACIA","index":36,"name":"Gilberto Andrade Advocacia","phone":"+55 11 99151-8468","address":"Rua Castilho, 392, cj. 91 — Brooklin Paulista","rating":"","reviews":"","score":93,"grade":"A","priority":"Alta prioridade","argument":"Atuação direta em inventário, família, sucessões e imobiliário; o site tem conteúdo, mas a apresentação é simples. Excelente candidato a uma atualização visual e de arquitetura.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"https://gilbertoandrade.adv.br/","instagram":"","email":"gilberto@gilbertoandrade.adv.br","responsible":"Gilberto Andrade","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Site precisa melhorar","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-156"},{"category":"ADVOCACIA","index":37,"name":"Davi Leão Advogados","phone":"+55 11 93335-7119","address":"Rua Princesa Isabel, 86 — Brooklin Paulista","rating":"","reviews":"","score":89,"grade":"A","priority":"Alta prioridade","argument":"Contato e WhatsApp já são claros; oportunidade de elevar percepção de excelência com uma experiência mais autoral, premium e organizada.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"https://davileaoadvogados.com.br/","instagram":"","email":"davileao.advogados@gmail.com","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Site precisa melhorar","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-157"},{"category":"ADVOCACIA","index":38,"name":"Terras Gonçalves Advogados","phone":"+55 11 97297-6620","address":"Rua Aureliano Guimarães, 150/172, cj. 215 — Morumbi","rating":"","reviews":"","score":77,"grade":"B","priority":"Média prioridade","argument":"Escritório com posicionamento forte e site ativo. Abordagem deve ser bem personalizada, focando modernização, performance ou melhoria da jornada.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"https://www.terrasgoncalves.com.br/","instagram":"","email":"contato@terrasgoncalves.com.br","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Possui site","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-158"},{"category":"ADVOCACIA","index":39,"name":"José Milagre Advocacia","phone":"+55 11 96137-7676","address":"Av. Eng. Luís Carlos Berrini, 550, 4º andar — Brooklin","rating":"","reviews":"","score":70,"grade":"B","priority":"Média prioridade","argument":"Marca conhecida em Direito Digital e site com conteúdo. Lead mais indicado para otimização/performance do que criação do zero.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"https://direitodigital.adv.br/","instagram":"@dr.josemilagre","email":"","responsible":"Dr. José Milagre","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Site bom","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-159"},{"category":"ADVOCACIA","index":40,"name":"Roque Advogados","phone":"+55 11 5548-1596","address":"Av. Adolfo Pinheiro, 2056, 9º andar — Brooklin Novo","rating":"","reviews":"","score":94,"grade":"A","priority":"Alta prioridade","argument":"O próprio endereço do site usa estrutura antiga em .php e a página de contato tem aparência legada. Excelente gancho para modernização completa, mobile e identidade premium.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"https://roqueadvogados.com.br/contato.php","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Site precisa melhorar","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-160"},{"category":"ADVOCACIA","index":41,"name":"Advocacia DFD","phone":"+55 11 3798-6008","address":"Rua Barão do Triunfo, 88, sala 510 — Brooklin Paulista","rating":"","reviews":"","score":91,"grade":"A","priority":"Alta prioridade","argument":"Site funcional e informativo, porém com oportunidade clara de elevar design, hierarquia, prova social e posicionamento de marca.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"https://advocaciadfd.com.br/","instagram":"","email":"contato@advocaciadfd.com.br","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Site precisa melhorar","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-161"},{"category":"ADVOCACIA","index":42,"name":"RAS Garcia Advogados Associados","phone":"+55 11 4858-9188","address":"Rua General Fonseca Téles, 360 — Jardim Paulista","rating":"","reviews":"","score":84,"grade":"A","priority":"Alta prioridade","argument":"Conteúdo forte em família, sucessões e imobiliário. Potencial para redesign e estratégia de conteúdo com uma experiência mais premium.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"https://rasgarcia.com.br/","instagram":"","email":"contato@rasgarcia.com.br","responsible":"Rogério Augusto Santos Garcia","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Possui site","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-162"},{"category":"ADVOCACIA","index":43,"name":"ABranco Advocacia e Cobrança","phone":"+55 11 2246-3636","address":"Rua Barão do Triunfo, 612, cj. 2102 — Brooklin","rating":"","reviews":"","score":92,"grade":"A","priority":"Alta prioridade","argument":"Site simples e direto, com grande espaço para um posicionamento mais atual, institucional e premium. Bom lead para abordagem por redesign.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"https://abranco.adv.br/contato","instagram":"","email":"abranco@abranco.adv.br","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Site precisa melhorar","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-163"},{"category":"ADVOCACIA","index":44,"name":"Aldo Soria Advocacia","phone":"não informado","address":"Rua Pamplona, 145, cj. 2, sala 2 — Jardim Paulista","rating":"","reviews":"","score":85,"grade":"A","priority":"Alta prioridade","argument":"Landing focada em inventário extrajudicial. Pode ganhar autoridade e abrangência com site institucional que organize marca, especialidades e conteúdo.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"https://asoria.com.br/inventario-extrajudicial-sp/","instagram":"","email":"","responsible":"Dr. Aldo Soria","lastContact":"","nextDate":"","nextAction":"","notes":"OAB 64.744; atuação pública destacada em inventário extrajudicial.","siteStatus":"Possui site","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-164"},{"category":"ADVOCACIA","index":45,"name":"Patrícia Kaddissi Advogados","phone":"+55 11 5085-0115","address":"Rua José Maria Lisboa, 41, 6º andar — Jardim Paulista","rating":"","reviews":"","score":68,"grade":"B","priority":"Média prioridade","argument":"Boutique de Família e Sucessões com posicionamento sofisticado e site estruturado. Prioridade menor para criação do zero.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"https://pkadv.com.br/","instagram":"","email":"contato@pkadv.com.br","responsible":"Patrícia Kaddissi","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Site bom","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-165"},{"category":"ADVOCACIA","index":46,"name":"Monteiro de Figueiredo Sociedade de Advogados","phone":"não informado","address":"R. Castilho, 392, 9º andar — Brooklin Paulista","rating":"","reviews":"","score":82,"grade":"A","priority":"Alta prioridade","argument":"Forte foco em inventário e divórcio com landing dedicada. Oportunidade de consolidar uma marca institucional mais premium e menos dependente de páginas de campanha.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"https://inventarioedivorciosp.com.br/","instagram":"","email":"","responsible":"Ericko Monteiro de Figueiredo","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Possui site","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-166"},{"category":"ADVOCACIA","index":47,"name":"MGALVÃO Advocacia Inteligente","phone":"+55 11 5531-1554","address":"Rua Pitu, 72, 8º andar, cj. 82 — Brooklin","rating":"","reviews":"","score":89,"grade":"A","priority":"Alta prioridade","argument":"Conteúdo institucional consistente, mas a apresentação pode ganhar muito com direção de arte mais contemporânea, melhor ritmo visual e experiência mobile.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"https://www.mgalvao.adv.br/","instagram":"","email":"mgalvao@mgalvao.adv.br","responsible":"Mauricio Galvão de Andrade","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Site precisa melhorar","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-167"},{"category":"ADVOCACIA","index":48,"name":"Gomes & Zini Advogados","phone":"+55 11 3739-5138","address":"Rua Dr. Luiz Migliano, 1986, sala 2118 — Morumbi","rating":"","reviews":"","score":95,"grade":"A","priority":"Alta prioridade","argument":"O site indexado exibe elementos genéricos/placeholder na área de sócios, o que é um ponto concreto de credibilidade e um ótimo gancho para um redesign completo.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"https://www.gomesziniadvogados.com.br/","instagram":"","email":"atendimento@gomesziniadvogados.com.br","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Site precisa melhorar","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-168"},{"category":"ADVOCACIA","index":49,"name":"GRG Advogados Associados","phone":"+55 11 5542-8666","address":"Av. Santo Amaro, 3330, 2º andar, cj. 22 — Brooklin","rating":"","reviews":"","score":90,"grade":"A","priority":"Alta prioridade","argument":"Página de contato e estrutura pública têm aparência mais antiga. Oportunidade clara de modernizar marca, responsividade e arquitetura de conteúdo.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"https://grg.adv.br/contact/","instagram":"","email":"grg@grg.adv.br","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"","siteStatus":"Site precisa melhorar","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"Pesquisa jurídica LM TECH — 20/08/2026","id":"lead-169"},{"category":"ADVOCACIA","index":50,"name":"João Margherita Advogado","phone":"(11) 91326-9475","address":"Rua Dr. Luiz Migliano, 1986, Cj. 603, Morumbi, São Paulo - SP","rating":"5,0","reviews":"42","score":75,"grade":"B","priority":"Média prioridade","argument":"site já estruturado e especializado; abordagem deve ser por conversão, UX e páginas específicas. Gancho: Seu posicionamento já é forte; dá para melhorar a experiência e transformar mais tráfego em contato.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"https://www.joaomargherita.adv.br/","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"Região: Morumbi. Áreas: Direito Criminal / Penal / Compliance Criminal.","siteStatus":"Possui site","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"30 leads advocacia SP — 20/08/2026","id":"lead-law-001"},{"category":"ADVOCACIA","index":51,"name":"Badra Advogados Associados","phone":"(11) 94811-0344","address":"Av. Paulista, 1159, Conj. 315, São Paulo - SP","rating":"4,9","reviews":"41","score":75,"grade":"B","priority":"Média prioridade","argument":"já possui presença digital; menos fácil que um escritório pequeno, mas tem estrutura para contratar. Gancho: arquitetura, diferenciação de áreas e experiência institucional.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"https://www.badra.adv.br/","instagram":"","email":"corporativo@badra.adv.br","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"Região: Jardim Paulista / Av. Paulista. Áreas: Empresarial, Imobiliário, Consumidor, Família, Previdenciário, Criminal e Bancário. Porte aparente: LinkedIn aponta 11–50 funcionários.","siteStatus":"Possui site","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"30 leads advocacia SP — 20/08/2026","id":"lead-law-003"},{"category":"ADVOCACIA","index":52,"name":"Martinho & Alves Advogados","phone":"(11) 3390-3691","address":"Av. Eng. Luís Carlos Berrini, 1694, 5º andar, Cj. 507, Sala 4, São Paulo - SP","rating":"4,8","reviews":"167","score":90,"grade":"A","priority":"Alta prioridade","argument":"bom porte aparente e endereço valorizado. Gancho: A imagem digital deveria acompanhar o endereço e o posicionamento corporativo do escritório.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"Região: Brooklin Novo / Berrini.","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"30 leads advocacia SP — 20/08/2026","id":"lead-law-007"},{"category":"ADVOCACIA","index":53,"name":"Murat Advogados Associados","phone":"(11) 99120-5860","address":"Av. Paulista, 1079, 8º andar, São Paulo - SP","rating":"5,0","reviews":"188","score":90,"grade":"A","priority":"Alta prioridade","argument":"prova social forte, celular e endereço premium. Gancho: transformar avaliações e especialidades em autoridade digital própria.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"Região: Av. Paulista.","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"30 leads advocacia SP — 20/08/2026","id":"lead-law-008"},{"category":"ADVOCACIA","index":54,"name":"Almeida Advogados","phone":"(11) 93151-3547","address":"Rua Dr. Renato Paes de Barros, 618, 2º andar, Itaim Bibi, São Paulo - SP","rating":"4,7","reviews":"58","score":90,"grade":"A","priority":"Alta prioridade","argument":"localização excelente, avaliações suficientes e celular direto. Gancho: percepção premium + presença local e institucional.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"Região: Itaim Bibi.","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"30 leads advocacia SP — 20/08/2026","id":"lead-law-009"},{"category":"ADVOCACIA","index":55,"name":"Advocacia Rca","phone":"(11) 99920-3888","address":"Rua Gomes de Carvalho, 911, Vila Olímpia, São Paulo - SP","rating":"4,9","reviews":"262","score":90,"grade":"A","priority":"Alta prioridade","argument":"reputação forte e telefone móvel em região corporativa. Gancho: transformar reputação do Google em ativo próprio.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"Região: Vila Olímpia.","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"30 leads advocacia SP — 20/08/2026","id":"lead-law-010"},{"category":"ADVOCACIA","index":56,"name":"Mariana Pinheiro Advogada","phone":"(11) 94346-1721","address":"Rua Dr. Luiz Migliano, 1986, Sala 1606, Portal do Morumbi, São Paulo - SP","rating":"5,0","reviews":"23","score":98,"grade":"A","priority":"Prioridade máxima","argument":"profissional individual/estrutura enxuta, telefone direto e ótima avaliação. Gancho: presença própria profissional para consolidar autoridade local.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"Região: Portal do Morumbi. Áreas: Direito Civil.","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"30 leads advocacia SP — 20/08/2026","id":"lead-law-011"},{"category":"ADVOCACIA","index":57,"name":"Sendrovich Advogados Associados","phone":"(11) 3068-0535","address":"Rua Estados Unidos, 2141, Jardim América, São Paulo - SP","rating":"5,0","reviews":"271","score":75,"grade":"B","priority":"Média prioridade","argument":"reputação muito forte; pode ser mais estruturado e um pouco mais difícil de acessar. Gancho: atualização institucional, performance e diferenciação.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"Região: Jardim América.","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"30 leads advocacia SP — 20/08/2026","id":"lead-law-014"},{"category":"ADVOCACIA","index":58,"name":"Lourenço Ferreira Advocacia","phone":"(11) 97770-8259","address":"Av. Rouxinol, 84, Sala 62, Moema, São Paulo - SP","rating":"5,0","reviews":"17","score":98,"grade":"A","priority":"Prioridade máxima","argument":"poucas avaliações, nota máxima, celular direto e região premium. Gancho: Vocês já têm ótima avaliação; falta transformar isso em uma presença própria mais forte.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"Região: Moema.","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"30 leads advocacia SP — 20/08/2026","id":"lead-law-015"},{"category":"ADVOCACIA","index":59,"name":"Veiga E Duarte Advocacia Criminal","phone":"(11) 92551-1809","address":"Rua Vieira de Morais, 1713, Cj. 61, Campo Belo, São Paulo - SP","rating":"5,0","reviews":"11","score":98,"grade":"A","priority":"Prioridade máxima","argument":"nicho especializado, celular direto e pouca massa digital. Gancho: site/landing premium de autoridade para urgências e consultas criminais.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"Região: Campo Belo. Áreas: Direito Criminal. Atendimento listado: 24h.","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"30 leads advocacia SP — 20/08/2026","id":"lead-law-016"},{"category":"ADVOCACIA","index":60,"name":"Cs — Cleber Silva Advocacia","phone":"(11) 94040-3783","address":"Rua Jericó, 46, Vila Madalena, São Paulo - SP","rating":"5,0","reviews":"52","score":98,"grade":"A","priority":"Prioridade máxima","argument":"reputação forte, estrutura aparentemente enxuta e celular. Gancho: melhorar autoridade própria e posicionamento local.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"Região: Vila Madalena.","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"30 leads advocacia SP — 20/08/2026","id":"lead-law-017"},{"category":"ADVOCACIA","index":61,"name":"Chade Advogados Associados","phone":"(11) 3038-1300","address":"Rua Taques Alvim, 172, Cidade Jardim, São Paulo - SP","rating":"4,2","reviews":"26","score":90,"grade":"A","priority":"Alta prioridade","argument":"bairro de altíssimo valor e presença digital com espaço para melhoria. Gancho: profissionalização da imagem e percepção de confiança.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"Região: Cidade Jardim.","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"30 leads advocacia SP — 20/08/2026","id":"lead-law-018"},{"category":"ADVOCACIA","index":62,"name":"Carvalho & Marinho Borges Advogados","phone":"(11) 98759-3471","address":"Av. Dr. Guilherme Dumont Vilares, 1274, Portal do Morumbi, São Paulo - SP","rating":"4,9","reviews":"55","score":98,"grade":"A","priority":"Prioridade máxima","argument":"celular, reputação forte e porte aparente acessível. Gancho: presença institucional moderna + páginas de atuação + WhatsApp.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"Região: Portal do Morumbi.","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"30 leads advocacia SP — 20/08/2026","id":"lead-law-019"},{"category":"ADVOCACIA","index":63,"name":"Sabz Advogados","phone":"(11) 3111-2233","address":"Av. Brasil, 842, Jardim América, São Paulo - SP","rating":"4,9","reviews":"51","score":75,"grade":"B","priority":"Média prioridade","argument":"endereço premium e boa reputação; pode exigir contato mais consultivo. Gancho: experiência de marca e comunicação institucional.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"Região: Jardim América.","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"30 leads advocacia SP — 20/08/2026","id":"lead-law-020"},{"category":"ADVOCACIA","index":64,"name":"Gentili Advogados & Associados","phone":"(11) 5542-0090","address":"Av. Ibirapuera, 2907, Torre C, Corporate Plaza, Moema, São Paulo - SP","rating":"5,0","reviews":"108","score":90,"grade":"A","priority":"Alta prioridade","argument":"endereço corporativo forte e boa reputação. Gancho: apresentação institucional compatível com o escritório.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"Região: Moema.","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"30 leads advocacia SP — 20/08/2026","id":"lead-law-021"},{"category":"ADVOCACIA","index":65,"name":"Viviane Santos Alves — Advogada","phone":"(11) 98382-2127","address":"Rua Vieira de Morais, 420, Campo Belo, São Paulo - SP","rating":"5,0","reviews":"105","score":98,"grade":"A","priority":"Prioridade máxima","argument":"contato móvel direto e forte prova social. Gancho: transformar reputação pessoal em marca digital própria.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"Região: Campo Belo.","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"30 leads advocacia SP — 20/08/2026","id":"lead-law-022"},{"category":"ADVOCACIA","index":66,"name":"Castelo Branco Advogados Associados","phone":"(11) 3043-8022","address":"Rua Natingui, 485, Vila Madalena, São Paulo - SP","rating":"4,5","reviews":"11","score":90,"grade":"A","priority":"Alta prioridade","argument":"poucas avaliações e marca tradicional. Gancho: modernização e reposicionamento sem perder seriedade.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"Região: Vila Madalena.","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"30 leads advocacia SP — 20/08/2026","id":"lead-law-023"},{"category":"ADVOCACIA","index":67,"name":"Manssur Advocacia","phone":"(11) 3032-6001","address":"Av. São Valério, 115, Cidade Jardim, São Paulo - SP","rating":"4,7","reviews":"20","score":90,"grade":"A","priority":"Alta prioridade","argument":"localização excelente e pouca massa digital. Gancho: A localização e a marca podem transmitir muito mais valor digitalmente.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"Região: Cidade Jardim.","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"30 leads advocacia SP — 20/08/2026","id":"lead-law-024"},{"category":"ADVOCACIA","index":68,"name":"Ageu Motta Advocacia","phone":"(11) 94169-2984","address":"Av. Paulista, 1471, Conj. 511, Sala 02, São Paulo - SP","rating":"5,0","reviews":"15","score":98,"grade":"A","priority":"Prioridade máxima","argument":"celular direto, poucas avaliações e endereço premium. Gancho: autoridade + presença digital + apresentação compatível com a Paulista.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"Região: Av. Paulista. Atendimento listado: 24h.","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"30 leads advocacia SP — 20/08/2026","id":"lead-law-025"},{"category":"ADVOCACIA","index":69,"name":"Dias De Souza Advogados Associados","phone":"(11) 3069-4277","address":"Av. Brasil, 1575, Jardim América, São Paulo - SP","rating":"4,8","reviews":"25","score":75,"grade":"B","priority":"Média prioridade","argument":"boa localização e reputação; pode exigir contato mais institucional. Gancho: modernização, performance e posicionamento.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"","instagram":"","email":"","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"Região: Jardim América.","siteStatus":"Não analisado","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"30 leads advocacia SP — 20/08/2026","id":"lead-law-026"},{"category":"ADVOCACIA","index":70,"name":"Msmv — Escritório De Advocacia","phone":"(11) 91041-8894","address":"Alameda Santos, 2223, 1º andar, Jardins, São Paulo - SP","rating":"","reviews":"","score":90,"grade":"A","priority":"Alta prioridade","argument":"escritório estruturado, mas com espaço para modernização da apresentação. Gancho: reformulação institucional e melhoria de experiência.","pitch":"Escritórios jurídicos vendem confiança, especialização e clareza. A abordagem deve focar presença institucional, experiência do usuário, organização das áreas, conteúdo informativo e conversão ética para contato — sem promessas de resultado.","status":"Novo","website":"https://www.msmv.com.br/","instagram":"","email":"contato@msmv.com.br","responsible":"","lastContact":"","nextDate":"","nextAction":"","notes":"Região: Jardins. Outra unidade: Rua São Benedito, 509, 2º andar, Alto da Boa Vista, São Paulo - SP.","siteStatus":"Site precisa melhorar","archived":false,"meetingDate":"","importedAt":"2026-08-20","sourceBatch":"30 leads advocacia SP — 20/08/2026","id":"lead-law-030"}];
+const STORAGE_KEY = 'lmtech_leads_crm_v2';
+const LEGACY_STORAGE_KEYS = ['vertice_leads_crm_v1'];
+const SCRIPT_KEY = 'lmtech_leads_scripts_v1';
+const LEGACY_SCRIPT_KEYS = ['vertice_leads_scripts_v2'];
+const STATUS = ['Novo','Contatar','Contatado','Interessado','Reunião marcada','Proposta enviada','Follow-up','Fechado','Perdido'];
+const CAT_ICONS = {'ADVOCACIA':'§'};
+const CATEGORY_ALIASES = [
+  ['ADVOCACIA',['ADVOCACIA','ADVOGADOS','ADVOGADO','ESCRITORIO DE ADVOCACIA','ESCRITÓRIO DE ADVOCACIA','SOCIEDADE DE ADVOGADOS','JURIDICO','JURÍDICO']]
+];
+const DEFAULT_SCRIPTS = {
+ 'ADVOCACIA':{
+   dependency:'Google + reputação + indicação + confiança. A decisão costuma passar pela clareza das áreas de atuação, autoridade percebida, conteúdo informativo e facilidade de contato. Comunicação deve respeitar as regras da OAB e evitar promessas de resultado.',
+   script:'Oi, tudo bem? Aqui é o Miguel, da LM TECH. Eu estava analisando a presença digital da [EMPRESA] e encontrei alguns pontos que podem elevar bastante a percepção institucional sem mudar o posicionamento jurídico do escritório. A ideia é organizar melhor especialidades, autoridade, conteúdo e contato, com uma experiência mais premium e adequada às regras de publicidade da advocacia. Eu já separei um diagnóstico rápido do que melhoraria. Posso te mostrar em 1 minuto?'
+ }
+};
+
+let leads = loadData();
+let scripts = loadScripts();
+let activeId = null;
+let isNew = false;
+let pendingImport = [];
+
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const esc = v => String(v ?? '').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+const normalize = v => String(v ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+const cleanMd = v => String(v ?? '').replace(/\*\*/g,'').replace(/`/g,'').replace(/\s+/g,' ').trim();
+const priorityName = g => g==='A'?'Alta':g==='B'?'Média':g==='C'?'Baixa':'—';
+const fmtScore = v => Number.isFinite(Number(v)) ? Number(v) : '—';
+const iconFor = cat => CAT_ICONS[cat] || '◆';
+const pad = n => String(n).padStart(2,'0');
+const toDateInput = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const toLocalDateTime = d => `${toDateInput(d)}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+const statusClass = s => s==='Interessado'||s==='Fechado'?'interested':s==='Reunião marcada'?'meeting':s==='Follow-up'?'follow':s==='Perdido'?'lost':'';
+
+function migrateLead(l){
+  return {
+    status:'Novo',website:'',instagram:'',email:'',responsible:'',lastContact:'',nextDate:'',nextAction:'',
+    notes:'',siteStatus:'Não analisado',argument:'',pitch:'',archived:false,meetingDate:'',importedAt:'',sourceBatch:'Base original',
+    ...l,
+    archived:Boolean(l.archived)
+  };
+}
+function leadIdentity(l){return `${normalize(l.name)}|${String(l.phone||'').replace(/\D/g,'')}`}
+function isLegalLead(l){
+  const c=normalize(l?.category||'');
+  return c.includes('advoc')||c.includes('jurid')||c.includes('sociedade de advogados');
+}
+function mergeBaseWithSaved(saved){
+  const out=(Array.isArray(saved)?saved:[]).filter(isLegalLead).map(l=>migrateLead({...l,category:'ADVOCACIA'})), seen=new Set(out.map(leadIdentity));
+  BASE_DATA.map(migrateLead).forEach(l=>{const k=leadIdentity(l);if(!seen.has(k)){out.push(l);seen.add(k)}});
+  return out;
+}
+function loadData(){
+  for(const key of [STORAGE_KEY,...LEGACY_STORAGE_KEYS]){
+    try{
+      const saved=JSON.parse(localStorage.getItem(key));
+      if(Array.isArray(saved)&&saved.length){const merged=mergeBaseWithSaved(saved);localStorage.setItem(STORAGE_KEY,JSON.stringify(merged));return merged}
+    }catch(e){}
+  }
+  return structuredClone(BASE_DATA).map(migrateLead);
+}
+function loadScripts(){
+  for(const key of [SCRIPT_KEY,...LEGACY_SCRIPT_KEYS]){
+    try{
+      const s=JSON.parse(localStorage.getItem(key));
+      if(s&&typeof s==='object'){const merged={...structuredClone(DEFAULT_SCRIPTS),...s};localStorage.setItem(SCRIPT_KEY,JSON.stringify(merged));return merged}
+    }catch(e){}
+  }
+  return structuredClone(DEFAULT_SCRIPTS);
+}
+function persist(){leads=leads.filter(isLegalLead).map(l=>({...l,category:'ADVOCACIA'}));localStorage.setItem(STORAGE_KEY,JSON.stringify(leads))}
+function persistScripts(){localStorage.setItem(SCRIPT_KEY,JSON.stringify(scripts))}
+function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.add('show');clearTimeout(window.__toast);window.__toast=setTimeout(()=>el.classList.remove('show'),1900)}
+function openOverlay(id){$('#'+id).classList.add('open');$('#'+id).setAttribute('aria-hidden','false');document.body.style.overflow='hidden'}
+function closeOverlay(id){$('#'+id).classList.remove('open');$('#'+id).setAttribute('aria-hidden','true');if(!$('.overlay.open'))document.body.style.overflow=''}
+function canonicalCategory(raw){
+  const cleaned=cleanMd(raw).replace(/^#+\s*/,'').replace(/[🍔💆💈👗🐶🚗⚙✂◈✦]/g,'').trim();
+  const n=normalize(cleaned).toUpperCase();
+  for(const [canonical,aliases] of CATEGORY_ALIASES){
+    if(aliases.some(a=>n===normalize(a).toUpperCase()))return canonical;
+  }
+  return cleaned.toUpperCase();
+}
+function setupFilters(){
+  const cats=[...new Set(leads.map(x=>x.category).filter(Boolean))].sort();
+  const cv=$('#categoryFilter').value,sv=$('#statusFilter').value;
+  $('#categoryFilter').innerHTML='<option value="">Advocacias e advogados</option>'+cats.map(c=>`<option>${esc(c)}</option>`).join('');
+  $('#statusFilter').innerHTML='<option value="">Todos os status</option>'+STATUS.map(s=>`<option>${s}</option>`).join('');
+  $('#fStatus').innerHTML=STATUS.map(s=>`<option>${s}</option>`).join('');
+  if(cats.includes(cv))$('#categoryFilter').value=cv;if(STATUS.includes(sv))$('#statusFilter').value=sv;
+}
+function filtered(){
+  const q=normalize($('#search').value),cat=$('#categoryFilter').value,grade=$('#gradeFilter').value,status=$('#statusFilter').value,archive=$('#archiveFilter').value;
+  let out=leads.filter(l=>{
+    const hay=normalize([l.name,l.category,l.phone,l.address,l.notes,l.argument,l.website,l.instagram,l.responsible,l.nextAction].join(' '));
+    const archiveOk=archive==='all'||(archive==='archived'&&l.archived)||(archive==='active'&&!l.archived);
+    return archiveOk&&(!q||hay.includes(q))&&(!cat||l.category===cat)&&(!grade||l.grade===grade)&&(!status||l.status===status);
+  });
+  const sort=$('#sortFilter').value;
+  out.sort((a,b)=>{
+    if(sort==='name-asc')return a.name.localeCompare(b.name,'pt-BR');
+    if(sort==='status')return (a.status||'').localeCompare(b.status||'','pt-BR');
+    if(sort==='next')return (a.nextDate||'9999').localeCompare(b.nextDate||'9999');
+    return (Number(b.score)||0)-(Number(a.score)||0);
+  });
+  return out;
+}
+function updateSummary(list){
+  const active=leads.filter(x=>!x.archived);
+  const today=toDateInput(new Date());
+  const follow=active.filter(x=>x.status==='Follow-up'&&(!x.nextDate||x.nextDate<=today)).length;
+  const meet=active.filter(x=>x.status==='Reunião marcada').length;
+  $('#todayFollow').textContent=follow;$('#todayMeet').textContent=meet;$('#todayActive').textContent=active.length;
+  $('#welcomeSummary').textContent=`Você tem ${active.length} leads ativos, ${follow} retorno${follow===1?'':'s'} pendente${follow===1?'':'s'} e ${meet} reunião${meet===1?'':'ões'} marcada${meet===1?'':'s'}. Use os atalhos para não deixar nenhum contato esfriar.`;
+  $('#statTotal').textContent=list.length;
+  $('#statA').textContent=list.filter(x=>x.grade==='A').length;
+  $('#statInterested').textContent=active.filter(x=>x.status==='Interessado').length;
+  $('#statMeetings').textContent=active.filter(x=>x.status==='Reunião marcada').length;
+  $('#statFollow').textContent=active.filter(x=>x.status==='Follow-up').length;
+  $('#statSiteOpp').textContent=leads.filter(x=>!x.archived&&(x.siteStatus==='Sem site'||x.siteStatus==='Site precisa melhorar')).length;
+}
+function render(){
+  const list=filtered();updateSummary(list);
+  $('#tbody').innerHTML=list.length?list.map(l=>`
+  <tr data-id="${l.id}">
+    <td><div class="company"><div class="avatar">${iconFor(l.category)}</div><div><b>${esc(l.name)}</b><small>${esc(l.category)}${l.archived?' • arquivado':''}${l.siteStatus&&l.siteStatus!=='Não analisado'?' • '+esc(l.siteStatus):''}</small></div></div></td>
+    <td><span class="score grade-${esc(l.grade)}"><i class="score-dot"></i>${fmtScore(l.score)}</span></td>
+    <td><span class="badge grade-${esc(l.grade)}">${esc(l.grade||'—')} • ${priorityName(l.grade)}</span></td>
+    <td class="phone">${esc(l.phone||'—')}</td>
+    <td class="address" title="${esc(l.address||'')}">${esc(l.address||'—')}</td>
+    <td><span class="badge status ${statusClass(l.status)}">${esc(l.status||'Novo')}</span></td>
+    <td>${l.meetingDate?`<span class="badge">◆ ${esc(l.meetingDate.replace('T',' '))}</span>`:l.nextDate?`<span class="badge">${esc(l.nextDate)}${l.nextAction?' • '+esc(l.nextAction):''}</span>`:'<span style="color:#5f6a7c">—</span>'}</td>
+    <td><button class="open" data-open="${l.id}">Abrir</button></td>
+  </tr>`).join(''):`<tr><td colspan="8"><div class="empty">Nenhum lead encontrado com esses filtros.</div></td></tr>`;
+  $('#mobileList').innerHTML=list.length?list.map(l=>`
+    <article class="lead-card" data-id="${l.id}">
+      <div class="lead-card-top"><div><h3>${esc(l.name)}</h3><p>${esc(l.category)}${l.archived?' • arquivado':''}${l.siteStatus&&l.siteStatus!=='Não analisado'?' • '+esc(l.siteStatus):''}</p></div><span class="score grade-${esc(l.grade)}">${fmtScore(l.score)}</span></div>
+      <div class="lead-card-meta"><span>${esc(l.grade||'—')} • ${priorityName(l.grade)}</span><span>${esc(l.status||'Novo')}</span>${l.nextDate?`<span>↻ ${esc(l.nextDate)}</span>`:''}${l.address?`<span>${esc(l.address)}</span>`:''}</div>
+    </article>`).join(''):`<div class="empty">Nenhum lead encontrado.</div>`;
+  $$('tbody tr[data-id],.lead-card[data-id],[data-open]').forEach(el=>el.addEventListener('click',()=>{const id=el.dataset.open||el.dataset.id;if(id)openLead(id)}));
+}
+function getScriptPack(category){return scripts[category]||{dependency:'Cadastre aqui o ponto de maior dependência deste nicho.',script:'Oi, tudo bem? Aqui é o Miguel, da LM TECH. Eu queria conversar rapidamente sobre a presença digital da [EMPRESA].'}}
+
+function openLead(id){
+  const l=leads.find(x=>x.id===id);if(!l)return;activeId=id;isNew=false;fillModal(l);openOverlay('leadOverlay');
+}
+function fillModal(l){
+  $('#modalCategory').textContent=l.category||'Lead';$('#modalTitle').textContent=l.name||'Novo lead';$('#modalSubtitle').textContent=l.address||l.phone||'Ficha comercial';
+  $('#detailScore').textContent=`${fmtScore(l.score)} ${l.grade?`• ${l.grade}`:''}`;
+  $('#detailGoogle').textContent=l.rating?`${l.rating} ★${l.reviews?` • ${l.reviews} avaliações`:''}`:'Não informado';
+  $('#detailStatus').textContent=l.archived?'Arquivado':l.status||'Novo';$('#detailNext').textContent=l.meetingDate?l.meetingDate.replace('T',' '):l.nextDate||'—';
+  const map={fName:'name',fCategory:'category',fPhone:'phone',fAddress:'address',fScore:'score',fGrade:'grade',fRating:'rating',fReviews:'reviews',fSiteStatus:'siteStatus',fWebsite:'website',fInstagram:'instagram',fEmail:'email',fStatus:'status',fResponsible:'responsible',fLastContact:'lastContact',fNextDate:'nextDate',fMeetingDate:'meetingDate',fNextAction:'nextAction',fArgument:'argument',fNotes:'notes'};
+  Object.entries(map).forEach(([id,k])=>{$('#'+id).value=l[k]??''});
+  const pack=getScriptPack(l.category);
+  $('#dependencyBox').innerHTML=`<strong>Ponto de atenção</strong>${esc(pack.dependency)}`;
+  $('#leadScript').value=pack.script.replaceAll('[EMPRESA]',l.name||'[EMPRESA]');
+  $('#pitchBox').innerHTML=`<strong>Abordagem sugerida para o nicho</strong>${esc(l.pitch||l.argument||'Use o script acima e personalize a conversa com os detalhes que encontrar sobre a empresa.')}`;
+  $('#deleteLead').style.visibility=isNew?'hidden':'visible';
+  $('#openWebsite').disabled=!String(l.website||'').trim();$('#openWhatsapp').disabled=String(l.phone||'').replace(/\D/g,'').length<10;
+  $('#quickArchive').innerHTML=l.archived?'<b>↩ Reativar lead</b><span>Volta para a lista ativa</span>':'<b>✕ Encerrar contato</b><span>Arquiva e tira da lista ativa</span>';
+}
+function readForm(){
+  const base=isNew?{}:leads.find(x=>x.id===activeId)||{};
+  return {...migrateLead(base),
+    id:base.id||`lead-${Date.now()}-${Math.random().toString(36).slice(2,6)}`,name:$('#fName').value.trim(),category:'ADVOCACIA',
+    phone:$('#fPhone').value.trim(),address:$('#fAddress').value.trim(),score:Number($('#fScore').value)||0,grade:$('#fGrade').value,
+    rating:$('#fRating').value.trim(),reviews:$('#fReviews').value.trim(),siteStatus:$('#fSiteStatus').value,website:$('#fWebsite').value.trim(),
+    instagram:$('#fInstagram').value.trim(),email:$('#fEmail').value.trim(),status:$('#fStatus').value,responsible:$('#fResponsible').value.trim(),
+    lastContact:$('#fLastContact').value,nextDate:$('#fNextDate').value,meetingDate:$('#fMeetingDate').value,nextAction:$('#fNextAction').value.trim(),
+    argument:$('#fArgument').value.trim(),notes:$('#fNotes').value.trim(),pitch:base.pitch||'',archived:Boolean(base.archived)
+  };
+}
+function saveCurrent(close=true){
+  const l=readForm();if(!l.name){toast('Digite o nome da empresa.');return false}
+  if(isNew){leads.unshift(l);activeId=l.id;isNew=false}else{const i=leads.findIndex(x=>x.id===activeId);if(i>=0)leads[i]=l}
+  persist();setupFilters();render();if(close)closeOverlay('leadOverlay');toast('Lead salvo.');return true;
+}
+function newLead(){
+  isNew=true;activeId=null;fillModal(migrateLead({id:'',name:'',category:'ADVOCACIA',phone:'',address:'',score:0,grade:'B',status:'Novo'}));$('#deleteLead').style.visibility='hidden';openOverlay('leadOverlay')
+}
+function quickArchive(){
+  if(isNew&&!saveCurrent(false))return;
+  const previous=leads.find(x=>x.id===activeId);if(!previous)return;
+  const l=readForm();l.archived=!previous.archived;
+  if(l.archived){l.status=l.status==='Fechado'?'Fechado':'Perdido';l.nextDate='';l.nextAction='Contato encerrado';l.meetingDate='';}
+  else{l.status='Novo';l.nextAction='';}
+  const i=leads.findIndex(x=>x.id===activeId);if(i>=0)leads[i]=l;persist();render();fillModal(l);toast(l.archived?'Lead arquivado e removido da lista ativa.':'Lead reativado.');
+}
+function quickMeeting(){
+  if(isNew&&!saveCurrent(false))return;
+  const l=readForm();l.status='Reunião marcada';l.archived=false;l.nextAction='Participar da reunião';
+  const i=leads.findIndex(x=>x.id===activeId);if(i>=0)leads[i]=l;persist();fillModal(l);render();
+  setTimeout(()=>$('#fMeetingDate').focus(),50);toast('Status alterado. Escolha a data e hora da reunião.');
+}
+function quick3days(){
+  if(isNew&&!saveCurrent(false))return;
+  const l=readForm();const d=new Date();d.setDate(d.getDate()+3);l.status='Follow-up';l.archived=false;l.nextDate=toDateInput(d);l.nextAction='Chamar novamente';l.meetingDate='';
+  const i=leads.findIndex(x=>x.id===activeId);if(i>=0)leads[i]=l;persist();fillModal(l);render();toast(`Retorno marcado para ${l.nextDate}.`);
+}
+
+/* Parser de remessa */
+function detectCategory(line){
+  const raw=String(line||'').trim();
+  const looksLikeHeading=/^#{1,6}\s+/.test(raw);
+  const stripped=cleanMd(raw).replace(/^#+\s*/,'').replace(/[🍔💆💈👗🐶🚗⚙✂◈✦]/g,'').trim();
+  const can=canonicalCategory(stripped);
+  const isKnown=CATEGORY_ALIASES.some(([c])=>c===can);
+  if(!isKnown)return null;
+  if(looksLikeHeading)return can;
+  const exactAlias=CATEGORY_ALIASES.find(([c])=>c===can)[1].some(a=>normalize(stripped)===normalize(a));
+  return exactAlias?can:null;
+}
+function parseScore(text){
+  const m=text.match(/Score:?\s*\**\s*(\d+)\s*(?:[—\-\/]\s*)?([ABC])?/i)||text.match(/\b(\d+)\s*([ABC])\b/i);
+  return m?{score:Number(m[1]),grade:(m[2]||'').toUpperCase()}:{score:0,grade:''};
+}
+function parseOneBlock(category,name,lines){
+  const txt=lines.join('\n'), flat=cleanMd(txt);
+  const phoneM=flat.match(/\+55\s+\d{2}\s+\d{4,5}-\d{4}/i);
+  const phone=/telefone\s+n[aã]o\s+informado/i.test(flat)?'não informado':phoneM?phoneM[0]:'';
+  let address='';
+  const am=txt.match(/(?:Endere[cç]o:?\s*)([^\n]+)/i);if(am)address=cleanMd(am[1]);
+  if(!address){
+    const streetLine=lines.map(cleanMd).find(x=>/^(?:R\.|Rua|Av\.|Avenida|Alameda|Estrada|Rod\.|Pra[cç]a)\s/i.test(x));
+    if(streetLine)address=streetLine;
+  }
+  if(!address){
+    const parts=flat.split(/\s+—\s+/);
+    for(const p of parts){
+      const c=cleanMd(p);
+      if(!/\+55|telefone|Score|\d[,.]\d\s*★|avalia/i.test(c)&&!(/^[ABC]$/i.test(c))&&c!=='---'&&c.length<90&&c.length>2){address=c;break}
+    }
+  }
+  let rating='',reviews='';
+  const rm=flat.match(/([\d,]+)\s*★(?:\s*[—\/]?\s*([\d.]+)\s*(?:avalia[cç][oõ]es)?)?/i);if(rm){rating=rm[1];reviews=rm[2]||''}
+  const sc=parseScore(flat);
+  const argM=txt.match(/Argumento(?:\s+forte)?:\s*([^\n]+)/i);
+  return migrateLead({
+    id:`lead-${Date.now()}-${Math.random().toString(36).slice(2,8)}`,category,name:cleanMd(name),phone,address,rating,reviews,
+    score:sc.score,grade:sc.grade||'',priority:'',argument:argM?cleanMd(argM[1]):'',pitch:'',status:'Novo',
+    importedAt:new Date().toISOString(),sourceBatch:'Remessa importada'
+  });
+}
+function parseBatchText(text){
+  const lines=text.replace(/\r/g,'').split('\n');let category=null;let current=null;const out=[];
+  const flush=()=>{if(current&&category){out.push(parseOneBlock(category,current.name,current.lines))}current=null};
+  for(let raw of lines){
+    const line=raw.trim();if(!line)continue;
+    const cat=detectCategory(line);if(cat){flush();category=cat;continue}
+    let m=line.match(/^\*\*(\d+)\.\s*(.*?)\*\*\s*$/);
+    if(m&&category){
+      flush();current={name:cleanMd(m[2]),lines:[]};continue;
+    }
+    m=line.match(/^(\d+)\.\s*\*\*(.*?)\*\*\s*—\s*(.*)$/);
+    if(m&&category){
+      flush();current={name:cleanMd(m[2]),lines:[m[3]]};continue;
+    }
+    m=line.match(/^(\d+)\.\s*(.*?)\s*—\s*(.*)$/);
+    if(m&&category){
+      flush();current={name:cleanMd(m[2]),lines:[m[3]]};continue;
+    }
+    if(current)current.lines.push(line);
+  }
+  flush();
+  return out.filter(x=>x.name&&x.category&&isLegalLead(x)).map(x=>({...x,category:'ADVOCACIA'}));
+}
+function dedupeImport(items){
+  const existing=new Set(leads.map(l=>`${normalize(l.name)}|${normalize(l.phone)}`));
+  const existingNames=new Set(leads.map(l=>normalize(l.name)));
+  const unique=[],dupes=[];
+  for(const l of items){
+    const key=`${normalize(l.name)}|${normalize(l.phone)}`;
+    if(existing.has(key)||existingNames.has(normalize(l.name))){dupes.push(l);continue}
+    existing.add(key);existingNames.add(normalize(l.name));unique.push(l);
+  }
+  return {unique,dupes};
+}
+function previewBatch(){
+  const parsed=parseBatchText($('#batchText').value);
+  const {unique,dupes}=dedupeImport(parsed);pendingImport=unique;
+  const byCat={};unique.forEach(l=>byCat[l.category]=(byCat[l.category]||0)+1);
+  $('#importResult').classList.add('show');
+  $('#importResult').innerHTML=parsed.length?`<b>${parsed.length}</b> leads reconhecidos • <b>${unique.length}</b> novos • <b>${dupes.length}</b> duplicados ignorados.<br><span style="color:#7f8ba0">${Object.entries(byCat).map(([k,v])=>`${esc(k)}: ${v}`).join(' • ')||'Nenhum novo lead'}</span>`:'Não consegui reconhecer leads jurídicos. Use um título como ADVOCACIA ou ADVOGADOS e itens numerados.';
+  $('#confirmBatch').disabled=!unique.length;
+}
+function confirmBatch(){
+  if(!pendingImport.length)return;leads.push(...pendingImport);persist();setupFilters();render();const n=pendingImport.length;pendingImport=[];$('#batchText').value='';$('#importResult').classList.remove('show');closeOverlay('importOverlay');toast(`${n} leads importados.`);
+}
+
+/* Scripts */
+function renderScriptsEditor(){
+  $('#scriptGrid').innerHTML=Object.entries(scripts).map(([cat,p])=>`
+    <div class="script-card" data-cat="${esc(cat)}">
+      <div class="script-card-head"><div><div class="kicker">${iconFor(cat)} Nicho</div><h4>${esc(cat)}</h4></div><span class="dep-pill">dependência-chave</span></div>
+      <div class="field"><label>O que este nicho mais depende</label><textarea class="dep-edit" style="min-height:90px">${esc(p.dependency)}</textarea></div>
+      <div class="field" style="margin-top:10px"><label>Script de ligação</label><textarea class="script-edit">${esc(p.script)}</textarea></div>
+    </div>`).join('');
+}
+function saveScriptsEditor(){
+  $$('.script-card').forEach(card=>{const cat=card.dataset.cat;scripts[cat]={dependency:card.querySelector('.dep-edit').value.trim(),script:card.querySelector('.script-edit').value.trim()}});
+  persistScripts();closeOverlay('scriptsOverlay');if(activeId){const l=leads.find(x=>x.id===activeId);if(l)fillModal(l)}toast('Scripts salvos.');
+}
+
+function download(name,content,type){const blob=new Blob([content],{type});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
+function csvCell(v){return `"${String(v??'').replaceAll('"','""')}"`}
+function exportCsv(){
+  const cols=['name','category','score','grade','phone','address','rating','reviews','status','archived','meetingDate','siteStatus','website','instagram','email','responsible','lastContact','nextDate','nextAction','argument','notes'];
+  const labels=['Empresa','Nicho','Score','Prioridade','Telefone','Endereço','Google','Avaliações','Status','Arquivado','Reunião','Situação do site','Website','Instagram','Email','Responsável','Último contato','Próximo contato','Próxima ação','Argumento','Notas'];
+  download('lm-tech-leads.csv','\ufeff'+[labels.map(csvCell).join(';'),...leads.map(l=>cols.map(c=>csvCell(l[c])).join(';'))].join('\n'),'text/csv;charset=utf-8')
+}
+function exportJson(){download('lm-tech-leads-backup.json',JSON.stringify({version:2,leads,scripts},null,2),'application/json')}
+function importJson(file){
+  const reader=new FileReader();reader.onload=()=>{try{const parsed=JSON.parse(reader.result);const arr=Array.isArray(parsed)?parsed:parsed.leads;if(!Array.isArray(arr))throw new Error();leads=arr.filter(isLegalLead).map(l=>migrateLead({...l,category:'ADVOCACIA'}));if(parsed.scripts&&parsed.scripts.ADVOCACIA){scripts={...structuredClone(DEFAULT_SCRIPTS),ADVOCACIA:parsed.scripts.ADVOCACIA};persistScripts()}persist();setupFilters();render();toast('Backup importado — apenas leads jurídicos foram mantidos.')}catch(e){alert('Esse arquivo não parece ser um backup válido do LM TECH Leads.')}};reader.readAsText(file)
+}
+
+/* Eventos */
+['search','categoryFilter','gradeFilter','statusFilter','archiveFilter','sortFilter'].forEach(id=>$('#'+id).addEventListener(id==='search'?'input':'change',render));
+$$('[data-close]').forEach(b=>b.addEventListener('click',()=>closeOverlay(b.dataset.close)));
+$$('.overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)closeOverlay(o.id)}));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')$$('.overlay.open').forEach(o=>closeOverlay(o.id))});
+$('#saveLead').onclick=()=>saveCurrent(true);$('#newLead').onclick=newLead;
+$('#deleteLead').onclick=()=>{if(!activeId||!confirm('Excluir permanentemente este lead? Use “Encerrar contato” se você só quiser tirá-lo da lista ativa.'))return;leads=leads.filter(x=>x.id!==activeId);persist();render();closeOverlay('leadOverlay');toast('Lead excluído.')};
+$('#openWebsite').onclick=()=>{let v=$('#fWebsite').value.trim();if(!v)return toast('Nenhum site cadastrado.');if(!/^https?:\/\//i.test(v))v='https://'+v;window.open(v,'_blank','noopener,noreferrer')};
+$('#openWhatsapp').onclick=()=>{const n=$('#fPhone').value.replace(/\D/g,'');if(n.length<10)return toast('Telefone inválido.');const full=n.startsWith('55')?n:'55'+n;window.open('https://wa.me/'+full,'_blank','noopener,noreferrer')};
+$('#copyPhone').onclick=async()=>{const v=$('#fPhone').value.trim();if(!v)return toast('Nenhum telefone cadastrado.');try{await navigator.clipboard.writeText(v);toast('Telefone copiado.')}catch(e){toast('Não foi possível copiar automaticamente.')}};
+$('#copyScript').onclick=async()=>{const v=$('#leadScript').value;try{await navigator.clipboard.writeText(v);toast('Script copiado.')}catch(e){toast('Selecione e copie o texto manualmente.')}};
+$('#quickArchive').onclick=quickArchive;$('#quickMeeting').onclick=quickMeeting;$('#quick3days').onclick=quick3days;
+
+$('#importBatch').onclick=()=>{pendingImport=[];$('#importResult').classList.remove('show');$('#confirmBatch').disabled=true;openOverlay('importOverlay')};
+$('#previewBatch').onclick=previewBatch;$('#confirmBatch').onclick=confirmBatch;$('#batchFileBtn').onclick=()=>$('#batchFile').click();
+$('#batchFile').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{$('#batchText').value=r.result;previewBatch()};r.readAsText(f);e.target.value=''});
+
+$('#scriptsBtn').onclick=()=>{renderScriptsEditor();openOverlay('scriptsOverlay')};$('#saveScripts').onclick=saveScriptsEditor;
+$('#resetScripts').onclick=()=>{if(!confirm('Restaurar todos os scripts e lembretes padrão?'))return;scripts=structuredClone(DEFAULT_SCRIPTS);renderScriptsEditor();persistScripts();toast('Scripts padrão restaurados.')};
+
+$('#exportCsv').onclick=exportCsv;$('#exportJson').onclick=exportJson;$('#importBtn').onclick=()=>$('#importFile').click();
+$('#importFile').addEventListener('change',e=>{if(e.target.files[0])importJson(e.target.files[0]);e.target.value=''});
+$('#resetBtn').onclick=()=>{if(!confirm('Isso apaga alterações locais e restaura a base embarcada do LM TECH Leads. Continuar?'))return;leads=structuredClone(BASE_DATA).map(migrateLead);persist();setupFilters();render();toast('Base original restaurada.')};
+
+setupFilters();render();
+</script>
+</body>
+</html>
